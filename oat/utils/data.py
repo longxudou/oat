@@ -47,6 +47,8 @@ def get_tokenizer(pretrain, model=None, padding_side="left", use_fast=True):
 
 def load_data_from_disk_or_hf(data_name: str):
     if os.path.exists(data_name):
+        if data_name.endswith('.jsonl'):
+            return datasets.load_dataset('json', data_files=data_name)
         return datasets.load_from_disk(data_name)
     if "@" in data_name:
         name, path = data_name.split("@")
